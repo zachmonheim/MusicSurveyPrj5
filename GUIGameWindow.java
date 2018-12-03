@@ -47,6 +47,7 @@ public class GUIGameWindow {
     public GUIGameWindow() throws FileNotFoundException {
         window = new Window();
         window.setTitle("Project 5: Music Survey");
+        window.setSize(1000, 500);
         
         theSongs = "SongList2018S.csv";
         theSurvey = "MusicSurveyData2018S.csv";
@@ -143,15 +144,15 @@ public class GUIGameWindow {
             title = "Region Legend";
         }
         
-        TextShape legendTitle = new TextShape(x - 110, 110, title);
+        TextShape legendTitle = new TextShape(x - 130, 110, title);
         window.addShape(legendTitle);
-        TextShape legendRead = new TextShape(x - 110, 130, name1, Color.MAGENTA);
+        TextShape legendRead = new TextShape(x - 130, 130, name1, Color.MAGENTA);
         window.addShape(legendRead);
-        TextShape legendArt = new TextShape(x - 110, 150, name2, Color.BLUE);
+        TextShape legendArt = new TextShape(x - 130, 150, name2, Color.BLUE);
         window.addShape(legendArt);
-        TextShape legendSports = new TextShape(x - 110, 170, name3, Color.ORANGE);
+        TextShape legendSports = new TextShape(x - 130, 170, name3, Color.ORANGE);
         window.addShape(legendSports);
-        TextShape legendMusic = new TextShape(x - 110, 190, name4, Color.GREEN);
+        TextShape legendMusic = new TextShape(x - 130, 190, name4, Color.GREEN);
         window.addShape(legendMusic);
         legendTitle.setBackgroundColor(Color.WHITE);
         legendRead.setBackgroundColor(Color.WHITE);
@@ -159,21 +160,21 @@ public class GUIGameWindow {
         legendSports.setBackgroundColor(Color.WHITE);
         legendMusic.setBackgroundColor(Color.WHITE);
 
-        Shape legendBar = new Shape(x - 60, 240, 4, 50, Color.BLACK);
+        Shape legendBar = new Shape(x - 80, 240, 4, 50, Color.BLACK);
         window.addShape(legendBar);
-        TextShape legendSongTitle = new TextShape(x - 97, 220, "Song Title", Color.BLACK);
+        TextShape legendSongTitle = new TextShape(x - 117, 220, "Song Title", Color.BLACK);
         legendSongTitle.setBackgroundColor(Color.WHITE);
         window.addShape(legendSongTitle);
-        TextShape legendHeard = new TextShape(x - 108, 255, "Heard", Color.BLACK);
+        TextShape legendHeard = new TextShape(x - 128, 255, "Heard", Color.BLACK);
         legendHeard.setBackgroundColor(Color.WHITE);
         window.addShape(legendHeard);
-        TextShape legendLikes = new TextShape(x - 54, 255, "Likes", Color.BLACK);
+        TextShape legendLikes = new TextShape(x - 74, 255, "Likes", Color.BLACK);
         legendLikes.setBackgroundColor(Color.WHITE);
         window.addShape(legendLikes);
 
-        Shape legend2 = new Shape(x - 118, 102, (120) - 4, (y / 2) - 4, Color.WHITE);
+        Shape legend2 = new Shape(x - 138, 102, (120) - 4, (y / 2) - 4, Color.WHITE);
         window.addShape(legend2);
-        Shape legend = new Shape(x - 120, 100, 120, y / 2, Color.BLACK);
+        Shape legend = new Shape(x - 150, 100, 120, y / 2, Color.BLACK);
         window.addShape(legend);
     }
 
@@ -316,24 +317,28 @@ public class GUIGameWindow {
         window.removeAllShapes();
         next.enable();
         
+        int a = (s.size() % 9);
         int b = s.size() / 9;
+        if (a != 0)
+        {
+            b++;
+        }
+        
+        page--;
         
         if (page <= 1)
         {
             start = 0;
             end = 9;
             prev.disable();
-            page--;
         }
-        else if (page >= b) {
+        else if (page >= b - 1) {
             end = start - 1;
             start = end - 9;
-            page--;
         }
         else {
             start -= 9;
             end -= 9;
-            page--;
         }
         
         sortIt(lastClicked);
@@ -352,26 +357,29 @@ public class GUIGameWindow {
         
         int a = (s.size() % 9);
         int b = s.size() / 9;
-        
-        
+        if (a != 0)
+        {
+            b++;
+        }
+        page++;
         if (page >= b) {
             next.disable();
             if (a == 0)
             {
-                end = s.size() - 1;
-                start = end - 9;
+                start += 9;
+                end += 9;
             }
             else
             {
                 end = (s.size() - 1);
-                start = (s.size() - 1) - a;
-                page++;
+                start = end - a;
+                
             }
         }
         else {
             start += 9;
             end += 9;
-            page++;
+            
         }
         
         sortIt(lastClicked);
